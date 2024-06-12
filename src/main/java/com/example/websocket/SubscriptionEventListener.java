@@ -10,12 +10,10 @@ import org.springframework.web.socket.messaging.SessionSubscribeEvent;
 @Component
 @Slf4j
 public class SubscriptionEventListener implements ApplicationListener<SessionSubscribeEvent> {
-
     @Override
     public void onApplicationEvent(@NonNull SessionSubscribeEvent event) {
         log.info("\nSessionSubscribeEvent: {}", event);
         SimpMessageHeaderAccessor wrapped = SimpMessageHeaderAccessor.wrap(event.getMessage());
-        log.info("\nSimpMessageHeaderAccessor: {}", wrapped.toString());
+        log.info("\nSimpMessageHeaderAccessor: {}", wrapped);
     }
-
 }

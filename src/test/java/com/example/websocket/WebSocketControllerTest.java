@@ -22,7 +22,8 @@ import java.util.concurrent.TimeoutException;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * @author bruce.stewart@altron.com
@@ -34,14 +35,12 @@ class WebSocketControllerTest {
     @LocalServerPort
     private Integer port;
 
-    private WebSocketStompClient webSocketStompClient;
-
     private StompSession session;
 
     @BeforeEach
     void setUp() throws ExecutionException, InterruptedException, TimeoutException {
-        this.webSocketStompClient = new WebSocketStompClient(new StandardWebSocketClient());
-        this.webSocketStompClient.setMessageConverter(new MappingJackson2MessageConverter());
+        WebSocketStompClient webSocketStompClient = new WebSocketStompClient(new StandardWebSocketClient());
+        webSocketStompClient.setMessageConverter(new MappingJackson2MessageConverter());
         String url = String.format("ws://%s:%d/%s", "localhost", port, WebSocketConfiguration.ENDPOINT);
         this.session = webSocketStompClient
                 .connectAsync(url, new StompSessionHandlerAdapter() {
